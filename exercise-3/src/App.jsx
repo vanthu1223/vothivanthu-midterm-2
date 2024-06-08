@@ -1,25 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 
 function App() {
-  /* You will need to use many state to keep the inut values and other needs */
+  const [inputA, setInputA] = useState("");
+  const [inputB, setInputB] = useState("");
+  const [sumAB, setSumAB] = useState("");
 
-  /* You will need some function to handle the key pressed and button events */
+  const handleInputA = (event) => {
+    const inputNumberA = event.target.value;
+    setInputA(inputNumberA);
+  };
+
+  const handleInputB = (event) => {
+    const inputNumberB = event.target.value;
+    setInputB(inputNumberB);
+  };
+
+  const handleAAndB = () => {
+    if (inputA === "" || inputB === "") {
+      setSumAB("A and B shall be numbers");
+    } else {
+      const sum = Number(inputA) + Number(inputB);
+      setSumAB(sum);
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleAAndB();
+  };
 
   return (
     <main>
       <h1>Calculator</h1>
 
       <label>A =</label>
-      <input onKeyUp={onA} />
+      <input onKeyUp={handleInputA} value={inputA} onChange={handleInputA} />
 
       <label>B =</label>
-      <input onKeyUp={onB} />
+      <input onKeyUp={handleInputB} value={inputB} onChange={handleInputB} />
 
       <label>A + B =</label>
-
-      {/* When Compute buton is clicked, this input display the sum of the 2 numbers, or the error message in RED */}
-      <input disabled />
-      <button>Compute</button>
+      <input disabled value={sumAB} />
+      <button onClick={handleSubmit}>Compute</button>
     </main>
   );
 }
